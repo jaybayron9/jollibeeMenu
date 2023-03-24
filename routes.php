@@ -3,7 +3,6 @@
 return [
     '404' => view('auth/404'),
     '' => view('dashboard'),
-    'menu' => view('menu'),
     '1' => view('menu'),
     '2' => view('menu'),
     '3' => view('menu'),

@@ -11,6 +11,15 @@ class Menu extends Connection {
         }
         return false;
     }
+
+    public function receipt() {
+        $value = $_POST['values'];
+
+        $_SESSION['product'] = $value[0];
+        $_SESSION['price'] = $value[1];
+
+        return parent::alert('success', '');
+    }
 }
 
 require('routes/menu.php');

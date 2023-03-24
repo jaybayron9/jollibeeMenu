@@ -119,9 +119,9 @@
         </div>
         <div class="col-span-3 ml-4 h-full overflow-y-auto">
             <?php
-                $categoryName = Menu::$conn->query("SELECT * FROM menu WHERE id = '{$_GET['i']}'");
-                if ($categoryName->num_rows > 0) {
-                    while ($row = $categoryName->fetch_assoc()) {
+            $categoryName = Menu::$conn->query("SELECT * FROM menu WHERE id = '{$_GET['i']}'");
+            if ($categoryName->num_rows > 0) {
+                while ($row = $categoryName->fetch_assoc()) {
             ?>
                     <div class="mt-10">
                         <p class="bg-white py-2 pl-4 font-semibold text-2xl">
@@ -131,40 +131,40 @@
 
 
                     <div class="grid grid-cols-3 gap-x-4 mb-4 mt-8">
-                        <?php 
-                            $desc = explode(", ", $row['description']);
-                            $description = array_filter($desc);
-    
-                            $pri  = array_map('intval', explode(", ", $row['price']));
-                            $price = array_filter($pri);
+                        <?php
+                        $desc = explode(", ", $row['description']);
+                        $description = array_filter($desc);
 
-                            for ($i = 0; $i < count($description); $i++) {
+                        $pri  = array_map('intval', explode(", ", $row['price']));
+                        $price = array_filter($pri);
+
+                        for ($i = 0; $i < count($description); $i++) {
                         ?>
-                                <div class="item items-center justify-center rounded shadow-2xl bg-rose-600 hover:bg-rose-500">
-                                    <div class="flex">
-                                        <div class="ml-auto mr-10 text-amber-400">
-                                            <svg class="w-7 h-7 absolute mt-3" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <img src="Public/Assets/Storage/Uploads/pic1.png" alt="Bonnie Avatar" class="bg-white">
-                                    <div data-row-data="<?= $description[$i] . ',' . $price[$i] ?>" class="product hover:cursor-pointer">
-                                        <p class="des font-semibold text-white px-4 pt-2">
-                                            <?= $description[$i] ?>
-                                        </p>
-                                        <p class="price font-light pb-4 text-white pt-1 pl-4 rounded-b">
-                                            Starts at ₱ <?= $price[$i] ?>
-                                        </p>
+                            <div class="item items-center justify-center rounded shadow-2xl bg-rose-600 hover:bg-rose-500">
+                                <div class="flex">
+                                    <div class="ml-auto mr-10 text-amber-400">
+                                        <svg class="w-7 h-7 absolute mt-3" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                        </svg>
                                     </div>
                                 </div>
-                        <?php 
-                            }
+                                <img src="Public/Assets/Storage/Uploads/pic1.png" alt="Bonnie Avatar" class="bg-white">
+                                <div data-row-data="<?= $description[$i] . ',' . $price[$i] ?>" class="product hover:cursor-pointer">
+                                    <p class="des font-semibold text-white px-4 pt-2">
+                                        <?= $description[$i] ?>
+                                    </p>
+                                    <p class="price font-light pb-4 text-white pt-1 pl-4 rounded-b">
+                                        Starts at ₱ <?= $price[$i] ?>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php
+                        }
                         ?>
                     </div>
             <?php
-                    }
                 }
+            }
             ?>
         </div>
     </div>
@@ -172,13 +172,52 @@
 </section>
 
 <script>
-    $(document).ready(function () {
-
-        $('.product').click(function (){
+    $(document).ready(function() {
+        var printDialogClosed = false;
+        $('.product').click(function() {
             var str = $(this).data('row-data');
             var values = str.split(',');
-            console.log(str);
+
             console.log(values);
+            console.log(values[0]);
+            console.log(values[1]);
+
+            $.ajax({
+                url: 'index.php?a=receipt',
+                type: 'POST',
+                data: {
+                    values: values,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 'success') {
+                        var iframe = "<iframe src='receipt.php' style='display: none;' ></iframe>";
+                        $("body").append(iframe);
+                        var iframeElement = document.querySelector("iframe");
+                        iframeElement.contentWindow.print();
+                        setTimeout(checkPrintDialogClosed, 3000);
+
+                    } else {
+                        alert(data.msg);
+                        console.log(data.msg);
+                    }
+                }
+            });
         })
+
+        window.onbeforeprint = function() {
+            printDialogClosed = false;
+        }
+
+        window.onafterprint = function() {
+            printDialogClosed = true;
+        }
+
+        function checkPrintDialogClosed() {
+            if (!printDialogClosed) {
+                alert("Click okay or press enter to continue.");
+                location.reload();
+            }
+        }
     });
 </script>
