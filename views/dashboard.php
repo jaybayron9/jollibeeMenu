@@ -1,4 +1,4 @@
-<section class="md:mx-16 mx-0 px-10 h-full bg-amber-50">
+<section class="md:mx-16 mx-0 px-10 h-screen bg-amber-50">
     <div class="grid px-4 md:mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 bg-gradient-to-r from-red-500 to-orange-500 mb-14">
         <div class="place-self-center lg:col-span-7 mt-10 ml-5">
             <h1 class="max-w-2xl mb-4 font-extrabold tracking-tight leading-none text-5xl text-6xl text-white font-sans">Jollibee Delivery</h1>
@@ -13,9 +13,5 @@
         <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
             <img src="Public/Assets/Storage/Defaults/logo.svg" alt="mockup" class="h-80">
         </div>
-    </div>
-
-    <div class="bg-red-600 py-14 text-center">
-        <p class="text-white font-light">Copyright © 2023 Jollibee Menu Brought To You By Orotskie</p>
     </div>
 </section>
