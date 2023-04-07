@@ -1,14 +1,14 @@
 <section class="md:mx-16 mx-0 px-10 h-screen bg-amber-50">
     <div class="grid grid-cols-2 gap-32 px-20 py-10">
-        <form action="" class="pr-20">
+        <form id="sign-in" action="" class="pr-20">
             <h1 class="font-bold" style="font-size: 18px;">SIGN IN</h1>
-            <p class="text-sm">Sign in with your email and password</p>
+            <p class="text-sm">Sign in with your username or email and password</p>
 
             <div class="mt-10 border-b border-gray-400">
-                <input type="text" name="username" id="username" class="p-3 border-none w-full bg-amber-50" placeholder="Username">
+                <input type="text" name="username" id="username" maxlength="40" class="p-3 border-none w-full bg-amber-50" placeholder="Username">
             </div>
             <div class="mt-5 border-b border-gray-400">
-                <input type="password" name="password" id="password" class="p-3 border-none w-full bg-amber-50" placeholder="*********">
+                <input type="password" name="password" id="password" maxlength="40" class="p-3 border-none w-full bg-amber-50" placeholder="*********">
             </div>
 
             <div class="bg-orange-500 mt-10 rounded-full hover:bg-orange-400">
@@ -32,3 +32,40 @@
         </form>
     </div>
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('#sign-in').submit(function(e){
+            e.preventDefault();
+            var username = $('#username').val();
+            var password = $('#password').val();
+            $.ajax({
+                url: 'index.php?r=login',
+                type: 'POST',
+                data: {
+                    username: username,
+                    password: password
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 'success') {
+                        swal({
+                            text: data.msg,
+                            icon: data.status,
+                            buttons: false,
+                            timer: 1500
+                        }).then(function() {
+                            window.location.href = '?i=1';
+                        })
+                    } else {
+                        swal({
+                            text: data.msg,
+                            icon: data.status,
+                            button: 'OK'
+                        })
+                    }
+                }
+            })
+        })
+    })
+</script>

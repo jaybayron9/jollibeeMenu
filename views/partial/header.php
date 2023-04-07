@@ -14,5 +14,7 @@
     <link href="Public/Assets/css/flowbite.min.css" rel="stylesheet" />
     <!-- Ajax/Jquery -->
     <script src="Public/Assets/js/jquery.min.js"></script>
+    <!-- Sweetalert -->
+    <script src="Public/Assets/js/sweetalert.js"></script>
 </head>
 <body class="" style="background-image: url('Public/Assets/Storage/Defaults/jb-desktop-bg.png'); background-repeat: repeat;"> 

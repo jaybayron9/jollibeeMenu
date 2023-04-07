@@ -19,14 +19,12 @@ class Connection
         }
     }
 
-    public static function closeConnection()
-    {
+    public static function closeConnection() {
         mysqli_close(self::$conn);
         self::$instance = null;
     }
 
-    public function alert($status, $message)
-    {
+    public function alert($status, $message) {
         return json_encode(
                 array(
                     'status' => $status, 
