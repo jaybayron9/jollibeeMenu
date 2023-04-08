@@ -14,11 +14,19 @@ class Menu extends Connection {
 
     public function show_orders() {
         $orders = parent::$conn->query("SELECT * FROM orders");
-        while ($row = $orders->fetch_assoc()) {
+        if ($orders->num_rows > 0) {
+            while ($row = $orders->fetch_assoc()) {
+                echo '
+                    <div class="col-span-3 grid grid-cols-5 bg-amber-300 rounded-lg shadow-sm">
+                        <div class="col-span-3 px-2 py-1 text-1xl">' . $row['purchase'] . '</div>
+                        <div class="col-span-2 px-2 py-1 text-2xl whitespace-nowrap"><span class="text-green-400">₱ </span>' . number_format($row['price'],2) . '</div>
+                    </div>
+                ';
+            }
+        } else {
             echo '
-                <div class="col-span-3 grid grid-cols-3 bg-amber-300 rounded-lg shadow-sm">
-                    <div class="col-span-2 px-2 py-1 text-2xl">' . $row['purchase'] . '</div>
-                    <div class="col-span-1 px-2 py-1 text-2xl"><span class="text-green-400">₱</span>' . $row['price'] . '</div>
+                <div class="col-span-3 grid grid-cols-3 bg-white rounded-lg shadow-sm">
+                    <div class="col-span-3 px-2 py-1 text-2xl text-center">No made orders yet!</div>
                 </div>
             ';
         }
@@ -76,18 +84,13 @@ class Menu extends Connection {
             return parent::alert('success', 'Orders has been cancelled!');
         }
         return parent::alert('error', 'Something went wrong!');
-    }
+    } 
 
     public static function list_orders() {
         return parent::$conn->query("SELECT * FROM orders");
     }
 
-    public function receipt() {
-        $value = $_POST['values'];
-
-        $_SESSION['product'] = $value[0];
-        $_SESSION['price'] = $value[1];
-
-        return parent::alert('success', '');
+    public static function receipt() {
+        return parent::$conn->query("SELECT * FROM orders");
     }
 }

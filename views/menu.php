@@ -82,7 +82,11 @@
                     if (data.status == 'success') {
                         $('#order-list').fadeIn();
                         setTimeout(function(){
-                            $('#order-list').fadeOut()
+                            var container = $('#orders');
+                            container.scrollTop(container[0].scrollHeight);
+                            setTimeout(function(){
+                                $('#order-list').fadeOut()
+                            }, 1200);
                         }, 1500);
                     } else {
                         swal({

@@ -8,6 +8,7 @@ $menuFunc = [
     'login' => ['obj' => $auth, 'method' => 'login'],
     'logout' => ['obj' => $auth, 'method' => 'logout'],
     'receipt' => ['obj' => $menu, 'method' => 'receipt'],
+    'total' => ['obj' => $menu, 'method' => 'total_order'],
     'check_orders' => ['obj' => $menu, 'method' => 'check_count'],
     'order_count' => ['obj' => $menu, 'method' => 'order_count'],
     'show_orders' => ['obj' => $menu, 'method' => 'show_orders'],

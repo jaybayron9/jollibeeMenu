@@ -6,9 +6,12 @@
                     <path fill-rule="evenodd" d="M11.03 3.97a.75.75 0 010 1.06l-6.22 6.22H21a.75.75 0 010 1.5H4.81l6.22 6.22a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z" clip-rule="evenodd" />
                 </svg> Back
             </a>
-            <div class="ml-auto py-3">
-                <a href="#" id="cancel-orders" class=" flex text-red-500 hover:text-red-400 text-2xl font-bold">
-                    Cancel
+            <div class="flex ml-auto py-3">
+                <a href="#" class="toPrint flex underline text-red-500 hover:text-red-400 text-2xl font-bold mr-4">
+                    Print Receipt
+                </a>
+                <a href="#" id="cancel-orders" class="flex underline text-red-500 hover:text-red-400 text-2xl font-bold">
+                    Cancel Order
                 </a>
             </div>
         </div>
@@ -40,12 +43,20 @@
     $(document).ready(function() {
         function checkList() {
             $.ajax({
-                url: 'index.php?r=check_orders',
+                url: '?r=check_orders',
                 dataType: 'json',
                 success: function(resp) {
                     if (resp.status == 'warning') {
-                        window.location.href = 'index.php?i=1'
+                        window.location.href = '?i=1'
                     }
+                },
+                error: function(resp) {
+                    swal({
+                        title: "Error",
+                        text: resp.msg,
+                        icon: resp.status,
+                        button: "Ok",
+                    })
                 }
             });
         }
@@ -53,7 +64,7 @@
         $('.remove-order').click(function() {
             var id = $(this).data('row-data');
             $.ajax({
-                url: 'index.php?r=remove_order',
+                url: '?r=remove_order',
                 type: 'POST',
                 data: {
                     id: id
@@ -85,7 +96,7 @@
             }).then((willDelete) => {
                 if (willDelete) {
                     $.ajax({
-                        url: 'index.php?r=cancel_orders',
+                        url: '?r=cancel_orders',
                         type: 'POST',
                         dataType: 'json',
                         success: function(data) {
@@ -95,7 +106,7 @@
                                     text: data.msg,
                                     icon: data.status,
                                     buttons: false,
-                                    time: 2000,
+                                    timer: 2000,
                                 })
                                 setTimeout(function() {
                                     window.location.href = '?i=1';
@@ -111,9 +122,14 @@
                         }
                     })
                 } else {
-                    swal("Order is safe!");
+                    swal({
+                        text: "Your order is safe!",
+                        icon: "success",
+                        buttons: false,
+                        timer: 2000,
+                    })
                 }
             })
         });
-    })
+    }) 
 </script>

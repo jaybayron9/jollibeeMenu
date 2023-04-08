@@ -55,7 +55,7 @@
                             buttons: false,
                             timer: 1500
                         }).then(function() {
-                            window.location.href = '?i=1';
+                            window.location.href = '';
                         })
                     } else {
                         swal({
