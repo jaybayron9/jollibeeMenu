@@ -5,6 +5,7 @@ return [
     '' => view('dashboard'),
     'login' => view('auth/login'),
     'orders' => view('orders'),
+    'profile' => view('auth/profile'),
     '1' => view('menu'),
     '2' => view('menu'),
     '3' => view('menu'),

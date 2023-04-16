@@ -6,7 +6,7 @@
                 <span class="ml-12 self-center whitespace-nowrap text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">Home</span>
             <?php } ?>
         </a>
-        <a href="?i=Profile" class="flex mr-10 items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">
+        <a href="?i=profile" class="flex mr-10 items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">
             Profile
         </a>
         <a <?= isset($_SESSION['admin']) ? 'href="#" id="log-out"' : 'href="?i=login"' ?> class="flex items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">

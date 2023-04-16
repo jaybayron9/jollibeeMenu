@@ -1,4 +1,4 @@
-<div class="h-screen py-10" style="width: 260px;">
+<div class="h-screen py-10 sticky top-0" style="width: 260px;">
     <div class="h-full overflow-y-auto overflow-x-hidden bg-gray-50 shadow-md">
         <ul class="space-y-0 font-sans">
             <li class="<?= Menu::checkCategory($_GET['i'], 1) ? "border-l-4 border-red-400" : "" ?>">

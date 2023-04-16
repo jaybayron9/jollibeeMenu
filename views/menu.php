@@ -1,4 +1,4 @@
-<section class="md:mx-16 mx-0 px-10 h-screen bg-amber-50">
+<section class="md:mx-16 mx-0 px-10 bg-amber-50">
     <div class="grid grid-cols-4">
         <?php require(view('components/menu-tabs')) ?>
         <div class="col-span-3 ml-4 h-full overflow-y-auto">
@@ -23,7 +23,7 @@
 
                     for ($i = 0; $i < count($description); $i++) {
                     ?>
-                        <div class="item items-center justify-center rounded shadow-2xl bg-rose-600 hover:bg-rose-500">
+                        <div class="item items-center mb-4 justify-center rounded shadow-2xl bg-rose-600 hover:bg-rose-500">
                             <div class="flex">
                                 <div class="ml-auto mr-10 text-amber-400">
                                     <svg class="w-7 h-7 absolute mt-3" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -82,11 +82,12 @@
                     if (data.status == 'success') {
                         $('#order-list').fadeIn();
                         setTimeout(function(){
-                            var container = $('#orders');
-                            container.scrollTop(container[0].scrollHeight);
                             setTimeout(function(){
                                 $('#order-list').fadeOut()
                             }, 1200);
+                            
+                            var container = $('#orders');
+                            container.scrollTop(container[0].scrollHeight);
                         }, 1500);
                     } else {
                         swal({

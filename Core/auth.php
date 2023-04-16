@@ -31,4 +31,42 @@ class Auth extends Connection {
             return false;
         }
     }
+
+    public static function profileInfo() {
+        return parent::$conn->query("Select * from admin");
+    }
+
+    public function saveProfile() {
+        extract($_POST);
+        $password = trim($password);
+
+        if (empty($password)) {
+            $query = parent::$conn->query("
+                update admin
+                set 
+                    name = '{$name}',
+                    username = '{$username}',
+                    email = '{$email}'
+            ");
+
+            if ($query) {
+                return parent::alert("success", "Profile Updated");
+            }
+            return parent::alert("error", "Profile Update Failed");
+        } else {
+            $query = parent::$conn->query("
+                update admin
+                set 
+                    name = '{$name}',
+                    username = '{$username}',
+                    email = '{$email}',
+                    password = '{$password}'
+            ");
+
+            if ($query) {
+                return parent::alert("success", "Profile Updated");
+            }
+            return parent::alert("error", "Profile Update Failed");
+        }
+    }
 }

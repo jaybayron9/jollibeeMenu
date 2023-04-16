@@ -54,9 +54,7 @@
                             icon: data.status,
                             buttons: false,
                             timer: 1500
-                        }).then(function() {
-                            window.location.href = '';
-                        })
+                        }).then(() => { window.location.href = ''; })
                     } else {
                         swal({
                             text: data.msg,
