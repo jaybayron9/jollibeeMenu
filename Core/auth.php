@@ -3,7 +3,7 @@
 class Auth extends Connection {
     public function login() {
         extract($_POST);
-        $sql = parent::$conn->query("SELECT * FROM admin WHERE username = '{$username}' or email = '{$username}' AND password = '{$password}'");
+        $sql = parent::$conn->query("SELECT * FROM admin WHERE (username = '{$username}' or email = '{$username}') AND password = '{$password}'");
 
         if ($sql->num_rows > 0) {
             foreach ($sql as $row) {
