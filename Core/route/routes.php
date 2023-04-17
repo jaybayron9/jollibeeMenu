@@ -10,6 +10,8 @@ $menuFunc = [
     'logout' => ['obj' => $auth, 'method' => 'logout'],
     'receipt' => ['obj' => $menu, 'method' => 'receipt'],
     'save_profile' => ['obj' => $auth, 'method' => 'saveProfile'],
+    'ver_que' => ['obj' => $auth, 'method' => 'ver_que'],
+    'change_pass' => ['obj' => $auth, 'method' => 'change_pass'],
     // end auth 
 
     // menu

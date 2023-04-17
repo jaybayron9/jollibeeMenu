@@ -16,14 +16,30 @@
             </div>
         </form>
 
-        <form action="" class="">
+        <form id="forgot-form" action="" class="">
             <h1 class="font-bold" style="font-size: 18px;">Forgot Password?</h1>
             <p class="text-sm">
-                We get it, stuff happens. Just enter your email address <br> below and we'll send you a link to reset your password!
+                We get it, stuff happens. Just enter your answer below to the hint and you can change your password!
             </p>
 
             <div class="mt-10 border-b border-gray-400">
-                <input type="email" name="email" id="email" class="p-3 border-none w-full bg-amber-50" placeholder="exampleemail@gmail.com">
+                <p><?= Auth::hint(); ?></p>
+                <input type="text" name="answer" id="answer" maxlength="40" class="p-3 border-none w-full bg-amber-50" placeholder="Answer here" autocomplete="off">
+            </div>
+
+            <div class="bg-orange-500 rounded-full hover:bg-orange-400" style="margin-top: 85px;">
+                <button type="submit" class="w-full p-2 font-medium text-white">SEND</button>
+            </div>
+        </form>
+
+        <form id="change-password" action="" class="hidden">
+            <h1 class="font-bold" style="font-size: 18px;">Change your password</h1>
+
+            <div class="mt-10 border-b border-gray-400">
+                <input type="password" name="newpassword" id="newpassword" maxlength="40" class="p-3 border-none w-full bg-amber-50" placeholder="**********">
+            </div>
+            <div class="mt-5 border-b border-gray-400">
+                <input type="password" name="retypepassword" id="retypepassword" maxlength="40" class="p-3 border-none w-full bg-amber-50" placeholder="*********">
             </div>
 
             <div class="bg-orange-500 rounded-full hover:bg-orange-400" style="margin-top: 85px;">
@@ -65,5 +81,53 @@
                 }
             })
         })
-    })
+
+        $('#forgot-form').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'index.php?r=ver_que',
+                type: 'POST',
+                data: new $(this).serialize(),
+                dataType: 'json',
+                success: function(resp) {
+                    if (resp.status == 'success') {
+                        $('#change-password').removeClass('hidden');
+                        $('#forgot-form').addClass('hidden');
+                    } else {
+                        swal({
+                            text: resp.msg,
+                            icon: resp.status,
+                            button: 'OK'
+                        })
+                    }
+                }
+            });
+        });
+
+        $('#change-password').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'index.php?r=change_pass',
+                type: 'POST',
+                data: new $(this).serialize(),
+                dataType: 'json',
+                success: function(resp) {
+                    if (resp.status == 'success') {
+                        swal({
+                            text: resp.msg,
+                            icon: resp.status,
+                            buttons: false,
+                            timer: 3000
+                        }).then(() => { window.location.reload() });
+                    } else {
+                        swal({
+                            text: resp.msg,
+                            icon: resp.status,
+                            button: 'OK'
+                        })
+                    }
+                }
+            });
+        });
+    });
 </script>

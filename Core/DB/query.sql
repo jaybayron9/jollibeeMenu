@@ -34,6 +34,8 @@ create table admin (
     email VARCHAR(100) NULL,
     password VARCHAR(100) NULL,
     status VARCHAR(100) NULL,
+    hint VARCHAR(100) NULL,
+    answer VARCHAR(100) NULL,
     token VARCHAR(100) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

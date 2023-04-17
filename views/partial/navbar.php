@@ -49,14 +49,7 @@
                         dataType: 'json',
                         success: function(data) {
                             if (data.status == 'success') {
-                                swal({
-                                    text: data.msg,
-                                    icon: data.status,
-                                    buttons: false,
-                                    timer: 1500
-                                }).then(function() {
-                                    window.location.reload();
-                                })
+                                window.location.reload();
                             } else {
                                 swal({
                                     text: data.msg,
