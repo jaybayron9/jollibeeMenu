@@ -13,7 +13,7 @@ $end = $_POST['end_date'];
 
 $query = Menu::$conn->query("
         SELECT * FROM transactions 
-        WHERE DATE(created_at) BETWEEN DATE('{$start}') AND DATE('{$end}')
+        WHERE DATE(date) BETWEEN DATE('{$start}') AND DATE('{$end}')
     ");
 
 ?>
