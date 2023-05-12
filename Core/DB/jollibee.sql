@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2023 at 07:41 PM
+-- Generation Time: May 12, 2023 at 05:15 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.0.19
 
@@ -46,7 +46,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `name`, `username`, `email`, `password`, `status`, `hint`, `answer`, `token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'admin@gmail.com', 'admin', NULL, 'Favorite color?', 'blue', NULL, '2023-04-17 17:21:46', '2023-04-17 17:37:40');
+(1, 'admin', 'admin', 'admin@gmail.com', 'admin', NULL, 'Favorite color?', 'blue', NULL, '2023-04-17 17:21:46', '2023-05-12 09:40:06');
 
 -- --------------------------------------------------------
 
@@ -90,8 +90,25 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `order_id` varchar(100) DEFAULT NULL,
   `customer_name` varchar(100) DEFAULT NULL,
-  `purchase` varchar(100) DEFAULT NULL,
+  `purchase` longtext DEFAULT NULL,
   `price` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id` int(11) NOT NULL,
+  `order_id` varchar(100) DEFAULT NULL,
+  `customer_name` varchar(100) DEFAULT NULL,
+  `purchase` longtext DEFAULT NULL,
+  `price` varchar(100) DEFAULT NULL,
+  `date` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -119,6 +136,12 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -138,7 +161,13 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=465;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
