@@ -6,6 +6,7 @@ return [
     'login' => view('auth/login'),
     'orders' => view('orders'),
     'profile' => view('auth/profile'),
+    'transactions' => view('transactions'),
     '1' => view('menu'),
     '2' => view('menu'),
     '3' => view('menu'),

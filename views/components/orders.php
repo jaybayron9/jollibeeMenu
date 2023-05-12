@@ -43,10 +43,37 @@
         });
 
         $('.toPrint').click(function() {
-            var iframe = "<iframe src='receipt.php' style='display: none;' ></iframe>";
-            $("body").append(iframe);
-            var iframeElement = document.querySelector("iframe");
-            iframeElement.contentWindow.print();
+            swal({
+                title: 'Are you sure?',
+                text: 'Can you confirm if these are all the orders you would like to place?',
+                icon: 'warning',
+                buttons: ["No", "Yes"],
+            }).then(function(willPrint) {
+                if (willPrint) {
+                    swal({
+                        title: 'Printing...',
+                        text: 'Please wait while we print the receipt.',
+                        icon: 'info',
+                        button: false,
+                        timer: 2000,
+                    }).then(()=>{
+                        $("body").append("<iframe src='receipt.php' style='display: none;' ></iframe>");
+                        var iframeElement = document.querySelector("iframe");
+                        iframeElement.contentWindow.print();
+                        
+                        setInterval(() => {
+                            return swal({
+                                title: "Transaction Complete!",
+                                text: "Thank you for shopping with us!",
+                                icon: "success",
+                                button: "OK",
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        }, 5000);
+                    });
+                }
+            })
         });
     })
 </script>

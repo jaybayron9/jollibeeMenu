@@ -77,7 +77,9 @@ class Auth extends Connection {
                 set 
                     name = '{$name}',
                     username = '{$username}',
-                    email = '{$email}'
+                    email = '{$email}',
+                    hint = '{$hint}',
+                    answer = '{$answer}'
             ");
 
             if ($query) {
@@ -91,7 +93,9 @@ class Auth extends Connection {
                     name = '{$name}',
                     username = '{$username}',
                     email = '{$email}',
-                    password = '{$password}'
+                    password = '{$password}',
+                    hint = '{$hint}',
+                    answer = '{$answer}'
             ");
 
             if ($query) {

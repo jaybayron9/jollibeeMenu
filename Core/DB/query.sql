@@ -7,11 +7,12 @@ create table orders (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     order_id VARCHAR(100) NULL,
     customer_name VARCHAR(100) NULL,
-    purchase VARCHAR(100) NULL,
+    purchase LONGTEXT NULL,
     price VARCHAR(100) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+drop table orders;
 
 create table menu (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +27,18 @@ create table menu (
 );
 
 drop table menu;
+
+create table transactions (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    order_id VARCHAR(100) NULL,
+    customer_name VARCHAR(100) NULL,
+    purchase LONGTEXT NULL,
+    price VARCHAR(100) NULL,
+    date VARCHAR(100) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+drop table transactions;
 
 create table admin (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,

@@ -16,7 +16,7 @@ $pdf->AddPage();
 
 $pdf->SetFont('Courier','B',15);
 
-$pdf->Cell(0,0,'JollibeePOS',0,0,'C');
+$pdf->Cell(0,0,'Jollibee',0,0,'C');
 
 $pdf->SetFont('Courier','',8);
 
@@ -71,8 +71,16 @@ $pdf->Cell(10,4,'',0,1,'');
 // Total
 $pdf->SetFont('Courier','B',7);
 $pdf->Cell(10,4,'Total: ',0,0,'');
-$pdf->Cell(20, 4, ' Php ' . number_format(Menu::total_order(),2 ) , 20, 1, '');
+$pdf->Cell(20, 4, ' Php ' . $total_order = number_format(Menu::total_order(),2 ) , 20, 1, '');
 // End Purchase
+
+if ($total_order) {
+    $query = Menu::$conn->query("UPDATE orders SET order_id = '{$row['id']}', customer_name = '{$invoice}'");
+    
+    if ($query) {
+        transaction();
+    }
+}
 
 $pdf->Cell(20,5,'',0,1,'');
 
@@ -90,4 +98,32 @@ $pdf->Cell(75,5,"Hope you liked it!",0,1,'C');
 
 $pdf->Output();
 
-?>
+
+
+function transaction() {
+    global $menu;
+    $orders = Connection::$conn->query("SELECT * FROM orders LIMIT 1");
+    $get_purchase = Connection::$conn->query("SELECT purchase FROM orders");
+
+    $purchase = '';
+    foreach ($get_purchase as $get) {
+        $purchase .= $get['purchase'] . '| ';
+    }
+
+    foreach ($orders as $order) {
+        $insert = Connection::$conn->query("
+            INSERT INTO transactions 
+                (order_id, customer_name, purchase, price, date) 
+            VALUES 
+                ('{$order['order_id']}', '{$order['customer_name']}', '$purchase', '{$order['price']}', '{$order['created_at']}')
+        ");
+
+        if ($insert) {
+            $remove = Connection::$conn->query("DELETE FROM orders");
+            if ($remove) 
+                return $menu->alert('success', 'Transaction has been made!');
+            } else {
+                return $menu->alert('error', 'Something went wrong!');
+        }
+    }
+}

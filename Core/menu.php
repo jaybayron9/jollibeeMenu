@@ -93,4 +93,27 @@ class Menu extends Connection {
     public static function receipt() {
         return parent::$conn->query("SELECT * FROM orders");
     }
+
+    public static function show_transactions() {
+        $query = parent::$conn->query("SELECT * FROM transactions");
+        $data = [];
+        while ($row = $query->fetch_assoc()) {
+
+            $fix_purchase = array_filter(explode("| ", $row['purchase']));
+
+            $purchase = '';
+            for ($i = 0; $i < count($fix_purchase); $i++) {
+                $purchase .= "<span class='bg-gray-100 rounded mr-1 px-2 shadow border border-red-500 '>" .$fix_purchase[$i] . "</span>";
+            }
+
+            $data[] = [
+                'id' => $row['id'],
+                'customer_name' => $row['customer_name'],
+                'purchase' => $purchase,
+                'price' => $row['price'],
+                'date' => $row['date'],
+            ];
+        }
+        return $data;
+    }
 }
