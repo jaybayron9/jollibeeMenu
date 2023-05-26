@@ -1,3 +1,9 @@
+<?php 
+if (!Auth::confirmAuth()) {
+    require(view('components/password'));
+} else {
+?>
+
 <section class="md:mx-16 mx-0 px-10 bg-amber-50 pb-5">
     <form id="profile-form" class="pt-10">
         <h1 class="font-bold" style="font-size: 18px;">PROFILE SETTINGS</h1>
@@ -34,6 +40,8 @@
         </div>
     </form>
 </section>
+
+<?php } ?>
 
 <script>
     $(document).ready(function() {

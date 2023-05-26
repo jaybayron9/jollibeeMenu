@@ -12,6 +12,7 @@ $menuFunc = [
     'save_profile' => ['obj' => $auth, 'method' => 'saveProfile'],
     'ver_que' => ['obj' => $auth, 'method' => 'ver_que'],
     'change_pass' => ['obj' => $auth, 'method' => 'change_pass'],
+    'password_auth' => ['obj' => $auth, 'method' => 'passwordAuth'],
     // end auth 
 
     // menu
@@ -22,6 +23,7 @@ $menuFunc = [
     'insert_order' => ['obj' => $menu, 'method' => 'insert_order'],
     'remove_order' => ['obj' => $menu, 'method' => 'remove_order'],
     'cancel_orders' => ['obj' => $menu, 'method' => 'cancel_orders'],
+    'add_product' => ['obj' => $menu, 'method' => 'addProduct'],
     // end menu
 ];
 

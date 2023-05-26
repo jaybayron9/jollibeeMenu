@@ -18,6 +18,7 @@ class Auth extends Connection {
     public function logout() {
         unset($_SESSION['admin']);
         unset($_SESSION['id']);
+        unset($_SESSION['password']);
         if (!isset($_SESSION['admin'])) {
             return parent::alert('success', 'Logout Success');
         }
@@ -103,5 +104,22 @@ class Auth extends Connection {
             }
             return parent::alert("error", "Profile Update Failed");
         }
+    }
+
+    public static function confirmAuth() {
+        if (isset($_SESSION['password'])) {
+            return true;
+        } 
+        return false;
+    }
+
+    public function passwordAuth() {
+        $confirm = parent::$conn->query("SELECT password FROM admin where password = '{$_POST['password']}'");
+
+        if ($confirm->num_rows > 0) {
+            $_SESSION['password'] = $_POST['password'];
+            return parent::alert('success', 'password confirmed.');
+        } 
+        return parent::alert('error', 'Incorrect password.');
     }
 }

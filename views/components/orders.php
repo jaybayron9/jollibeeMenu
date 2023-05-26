@@ -68,7 +68,7 @@
                                 icon: "success",
                                 button: "OK",
                             }).then(() => {
-                                window.location.reload();
+                                window.location.href = '?i=1';
                             });
                         }, 5000);
                     });

@@ -1,8 +1,8 @@
 <?php 
 
 class Menu extends Connection {
-    public static function get($table) {
-        return parent::$conn->query("SELECT * FROM $table");
+    public static function get($table, $where = '') {
+        return parent::$conn->query("SELECT * FROM $table $where");
     }
 
     public static function checkCategory($GET, $index) {
@@ -115,5 +115,36 @@ class Menu extends Connection {
             ];
         }
         return $data;
+    }
+
+    public function addProduct() {
+        $category = $_POST['category'];
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+
+        $categories = self::get("menu", "WHERE category = '{$category}'");
+
+        foreach ($categories as $product) {
+            $categoryDescription = explode(', ', $product['description']);
+            $categoryDescription[] = $description;
+            $newDescription = implode(', ', $categoryDescription);
+
+            $categoryPrice = explode(', ', $product['price']);
+            $categoryPrice[] = $price;
+            $newPrice = implode(', ', $categoryPrice);
+
+            $qry = parent::$conn->query("
+                    UPDATE menu 
+                    SET 
+                        description = '{$newDescription}', 
+                        price = '{$newPrice}'
+                    WHERE category = '{$category}'
+                ");
+
+            if ($qry) {
+                return parent::alert('success', '');
+            } 
+            return parent::alert('error', '');
+        }
     }
 }

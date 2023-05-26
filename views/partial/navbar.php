@@ -4,41 +4,47 @@
             <img src="Public/Assets/Storage/Defaults/logo.svg" class="h-13" alt="Jollibee Logo" />
             <span class="ml-12 self-center whitespace-nowrap text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">Home</span>
         </a>
-        <?php if (isset($_SESSION['admin'])) { ?>
-            <a href="?i=1" class="flex mr-10 items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">
-                Menu
-            </a>
+        <a href="?i=1" class="flex mr-10 items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">
+            Menu
+        </a>
+        <?php if (isset($_SESSION['admin']) && urlIs('i=admin') || urlIs('i=transactions') || urlIs('i=profile') ) { ?>
             <a href="?i=transactions" class="flex mr-10 items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">
                 Transactions
             </a>
+            <?php if (Auth::confirmAuth()) { ?>
+                <a data-modal-target="addProductModal" data-modal-toggle="addProductModal" class="hover:cursor-pointer flex mr-10 items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">
+                    Add Product
+                </a>
+            <?php } ?>
             <a href="?i=profile" class="flex mr-10 items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">
                 Profile
             </a>
             <a <?= isset($_SESSION['admin']) ? 'href="#" id="log-out"' : 'href="?i=login"' ?> class="flex items-center text-white hover:text-orange-400 font-bold font-sans" style="font-size: 15px;">
                 <?= isset($_SESSION['admin']) ? 'Log out' : '' ?>
             </a>
-        
-            <div class="ml-auto flex items-center md:order-2">
-                <a href="#" id="refresh" title="Refresh" class="text-white mr-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                    </svg>
-                </a>
-                <a href="#" id="view-orders" title="View ordered" class="hidden lg:mt-0 lg:col-span-5 lg:flex hover:cursor-pointer">
-                    <div class="p-2 z-[10]">
-                        <span id="order-count" class="rounded-full bg-amber-400 px-2 py-1 -mr-6 font-semibold">
-                            0
-                        </span>
-                    </div>
-                    <img src="Public/Assets/Storage/Defaults/bag@3x.png" class="h-11" alt="Jollibee Logo" />
-                </a>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 hover-to-view hover:cursor-pointer ml-1 text-white">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
-                </svg>
-            </div>
         <?php } ?>
+        <div class="ml-auto flex items-center md:order-2">
+            <a href="#" id="refresh" title="Refresh" class="text-white mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+            </a>
+            <a href="#" id="view-orders" title="View ordered" class="hidden lg:mt-0 lg:col-span-5 lg:flex hover:cursor-pointer">
+                <div class="p-2 z-[10]">
+                    <span id="order-count" class="rounded-full bg-amber-400 px-2 py-1 -mr-6 font-semibold">
+                        0
+                    </span>
+                </div>
+                <img src="Public/Assets/Storage/Defaults/bag@3x.png" class="h-11" alt="Jollibee Logo" />
+            </a>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 hover-to-view hover:cursor-pointer ml-1 text-white">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
+            </svg>
+        </div>
     </div>
 </nav>
+
+<?php require(view('components/add-product')) ?>
 
 <script>
     $(document).ready(function() {
@@ -47,7 +53,7 @@
                 title: 'Are you sure?',
                 text: 'You will be logged out from your account',
                 icon: 'warning',
-                buttons: true,
+                buttons: ['Cancel', 'Logout'],
                 dangerMode: true
             }).then((willDelete) => {
                 if (willDelete) {

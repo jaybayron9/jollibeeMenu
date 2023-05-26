@@ -101,16 +101,7 @@
                         dataType: 'json',
                         success: function(data) {
                             if (data.status == 'success') {
-                                swal({
-                                    title: "Success",
-                                    text: data.msg,
-                                    icon: data.status,
-                                    buttons: false,
-                                    timer: 2000,
-                                })
-                                setTimeout(function() {
-                                    window.location.href = '?i=1';
-                                }, 2100)
+                                window.location.href = '?i=1';
                             } else {
                                 swal({
                                     title: "Error",

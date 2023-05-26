@@ -1,5 +1,11 @@
 <link rel="stylesheet" href="Public/Assets/css/table.css">
 
+<?php 
+if (!Auth::confirmAuth()) {
+    require(view('components/password'));
+} else {
+?>
+
 <section class="md:mx-16 mx-0 px-10 h-screen bg-amber-50">
     <div class="py-5">
         <form action="print-transaction.php" target="_blank" method="POST" class="flex mb-4">
@@ -47,8 +53,8 @@
                         <td><?= $row['id'] ?></td>
                         <td><?= $row['customer_name'] ?></td>
                         <td><?= $row['purchase'] ?></td>
-                        <td><?= $row['price'] ?></td>
-                        <td><?= date('Y-m-d', strtotime($row['date'])) ?></td>
+                        <td><span class="text-green-400">₱</span> <?= $row['price'] ?></td>
+                        <td class="whitespace-nowrap"><?= date('Y-m-d', strtotime($row['date'])) ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>
@@ -56,6 +62,8 @@
         </div>
     </div>
 </section>
+
+<?php } ?>
 
 <script>
     $(document).ready(function() {

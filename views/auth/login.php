@@ -64,13 +64,8 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    if (data.status !== 'success') {
-                        swal({
-                            text: data.msg,
-                            icon: data.status,
-                            buttons: false,
-                            timer: 1500
-                        }).then(() => { window.location.href = ''; })
+                    if (data.status == 'success') {
+                        location.reload();
                     } else {
                         swal({
                             text: data.msg,
